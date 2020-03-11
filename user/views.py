@@ -20,8 +20,8 @@ def users_list(request):
 @csrf_exempt
 def register_user(request):
     if request.method == 'POST':
-        #clients_data = JSONParser().parse(request) 
-        user_data = {'id':5,'firstname':'salma','email': 'asma@gmail.com','password':'458745'}
+        user_data = JSONParser().parse(request) 
+        #user_data = {'id':5,'firstname':'salma','email': 'asma@gmail.com','password':'458745'}
         user_serializer = UserSerializer(data=user_data)
         if user_serializer.is_valid():
             user_serializer.save()
@@ -39,8 +39,9 @@ def user_del(request, pk):
 def user_role(request, pk):
     if request.method == 'POST':
         user = User.objects.get(pk=pk)
-        #role_data = JSONParser().parse(request) 
-        user.role="admin"
+        role_data = JSONParser().parse(request)
+        user.role=role_data 
+        #user.role="admin"
         user.save()
         # Client.objects.all().delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
